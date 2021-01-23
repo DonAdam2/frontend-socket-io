@@ -1,0 +1,14 @@
+# dependencies
+/node_modules
+/dist
+
+#idea folder which is the IDE setting files
+.idea
+.vscode
+debug.log
+
+# misc
+.DS_Store
+
+# analyze webpack output json file
+stats.json
