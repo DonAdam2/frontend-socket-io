@@ -1,5 +1,5 @@
 // Socket param is the client.
-export default function socketMiddleware(socket) {
+export const socketMiddleware = (socket) => {
 	return ({ dispatch, getState }) => (next) => (action) => {
 		if (typeof action === 'function') {
 			return action(dispatch, getState);
@@ -30,4 +30,4 @@ export default function socketMiddleware(socket) {
 				return next({ ...rest, error, type: FAILURE });
 			});
 	};
-}
+};
