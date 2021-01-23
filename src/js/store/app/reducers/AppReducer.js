@@ -21,11 +21,9 @@ const reducer = (state = initialState, action) => {
 			return updateObject(state, { connectionStatus: 'connecting' });
 		}
 		case START_SOCKET_CONNECTION_SUCCESS: {
-			console.log('server response', action.result);
 			return updateObject(state, { connectionStatus: 'connected' });
 		}
 		case START_SOCKET_CONNECTION_FAIL: {
-			console.log('server error response', action.error);
 			return updateObject(state, { connectionStatus: 'connection failed' });
 		}
 		default:
