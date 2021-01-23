@@ -1,7 +1,12 @@
 //constants
 import { updateObject } from '../../../constants/Helpers';
 //action types
-import { SEND_MESSAGE, SEND_MESSAGE_FAIL, SEND_MESSAGE_SUCCESS } from '../chatActionTypes';
+import {
+	SEND_IS_TYPING,
+	SEND_MESSAGE,
+	SEND_MESSAGE_FAIL,
+	SEND_MESSAGE_SUCCESS,
+} from '../chatActionTypes';
 
 const initialState = {
 	messageStatus: '',
@@ -20,6 +25,9 @@ const reducer = (state = initialState, action) => {
 		}
 		case SEND_MESSAGE_FAIL: {
 			return updateObject(state, { messageStatus: 'send failed' });
+		}
+		case SEND_IS_TYPING: {
+			return updateObject(state, { feedback: action.result });
 		}
 		default:
 			return state;

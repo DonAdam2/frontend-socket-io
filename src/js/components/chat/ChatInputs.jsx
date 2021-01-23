@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 //actions
-import { sendMessage } from '../../store/chat/actions/ChatActions';
+import { sendIsTyping, sendMessage } from '../../store/chat/actions/ChatActions';
 
 const ChatInputs = () => {
 	const [message, setMessage] = useState(''),
@@ -14,6 +14,10 @@ const ChatInputs = () => {
 
 	const usernameHandler = ({ target: { value } }) => {
 		setUsername(value);
+	};
+
+	const messageTypingHandler = () => {
+		dispatch(sendIsTyping({ username }));
 	};
 
 	const submit = () => {
@@ -33,6 +37,7 @@ const ChatInputs = () => {
 				type="text"
 				value={message}
 				onChange={messageHandler}
+				onKeyPress={messageTypingHandler}
 				placeholder="Enter your message..."
 			/>
 			<button onClick={submit} disabled={!username || !message}>
