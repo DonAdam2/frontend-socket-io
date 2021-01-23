@@ -1,5 +1,5 @@
+// Socket param is the client.
 export default function socketMiddleware(socket) {
-	// Socket param is the client. We'll show how to set this up later.
 	return ({ dispatch, getState }) => (next) => (action) => {
 		if (typeof action === 'function') {
 			return action(dispatch, getState);
