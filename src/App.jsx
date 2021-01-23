@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { startSocketConnection } from './js/store/app/actions/AppActions';
 //components
 import LoadingIndicator from './js/components/UI/LoadingIndicator';
+import ChatBox from './js/containers/ChatBox';
 const TestComponent = lazy(() => import('./js/components/TestComponent'));
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
 			}
 		>
 			<TestComponent />
+			<ChatBox />
 		</Suspense>
 	);
 };

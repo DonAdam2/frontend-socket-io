@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+//actions
+import { sendMessage } from '../../store/chat/actions/ChatActions';
 
-const ChatInputs = ({ sendMessage }) => {
+const ChatInputs = () => {
 	const [message, setMessage] = useState(''),
-		[username, setUsername] = useState('');
+		[username, setUsername] = useState(''),
+		dispatch = useDispatch();
 
 	const messageHandler = ({ target: { value } }) => {
 		setMessage(value);
@@ -13,14 +17,27 @@ const ChatInputs = ({ sendMessage }) => {
 	};
 
 	const submit = () => {
-		sendMessage({ message, handle: username });
+		dispatch(sendMessage({ message, username }));
+		setMessage('');
 	};
 
 	return (
 		<div className="chat-inputs">
-			<input type="text" value={username} onChange={usernameHandler} />
-			<input type="text" value={message} onChange={messageHandler} />
-			<button onClick={submit}>Send</button>
+			<input
+				type="text"
+				value={username}
+				onChange={usernameHandler}
+				placeholder="Enter your username..."
+			/>
+			<input
+				type="text"
+				value={message}
+				onChange={messageHandler}
+				placeholder="Enter your message..."
+			/>
+			<button onClick={submit} disabled={!username || !message}>
+				Send
+			</button>
 		</div>
 	);
 };
