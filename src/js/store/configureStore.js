@@ -1,7 +1,10 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+//root reducer
 import rootReducer from './rootReducer';
+//middle wares
+import thunkMiddleware from 'redux-thunk';
+import socketMiddleware from './middlewares/SocketMiddleWare';
 
 const middlewares = [];
 
@@ -11,11 +14,13 @@ if (process.env.NODE_ENV !== 'production') {
 	middlewares.push(logger);
 }
 
-const configureStore = () => {
+const configureStore = (socketClient) => {
 	const store = createStore(
 		rootReducer,
 		/* preloadedState, */
-		composeWithDevTools(applyMiddleware(thunkMiddleware, ...middlewares))
+		composeWithDevTools(
+			applyMiddleware(thunkMiddleware, socketMiddleware(socketClient), ...middlewares)
+		)
 	);
 
 	// enable hot loading in development mode only

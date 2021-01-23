@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //selectors
-import { getTestAction } from '../store/app/selectors/AppSelectors';
+import { getConnectionStatus, getTestAction } from '../store/app/selectors/AppSelectors';
 //actions
 import { setTestAction } from '../store/app/actions/AppActions';
 
 const TestComponent = () => {
 	const dispatch = useDispatch(),
+		connectionStatus = useSelector((state) => getConnectionStatus({ state })),
 		testAction = useSelector((state) => getTestAction({ state }));
 
 	return (
@@ -16,6 +17,9 @@ const TestComponent = () => {
 			</p>
 			<p>
 				Testing the store <strong>{testAction}</strong>
+			</p>
+			<p>
+				current socket connection status is: <strong>{connectionStatus}</strong>
 			</p>
 			<button className="std-btn primary" onClick={() => dispatch(setTestAction())}>
 				Change text
