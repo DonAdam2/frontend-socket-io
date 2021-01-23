@@ -1,0 +1,15 @@
+.chat-window {
+  height: 400px;
+  overflow: auto;
+  background: #f9f9f9;
+
+  .output {
+    color: #aaa;
+    padding: 14px 0;
+    margin: 0 20px;
+
+    strong {
+      color: #575ed8;
+    }
+  }
+}

@@ -1,5 +1,8 @@
 //action types
 import {
+	SEND_MESSAGE,
+	SEND_MESSAGE_FAIL,
+	SEND_MESSAGE_SUCCESS,
 	START_SOCKET_CONNECTION,
 	START_SOCKET_CONNECTION_FAIL,
 	START_SOCKET_CONNECTION_SUCCESS,
@@ -25,6 +28,16 @@ const reducer = (state = initialState, action) => {
 		}
 		case START_SOCKET_CONNECTION_FAIL: {
 			return updateObject(state, { connectionStatus: 'connection failed' });
+		}
+		case SEND_MESSAGE: {
+			return updateObject(state, { connectionStatus: 'Sending message' });
+		}
+		case SEND_MESSAGE_SUCCESS: {
+			console.log(action.result);
+			return updateObject(state, { connectionStatus: 'Sent message' });
+		}
+		case SEND_MESSAGE_FAIL: {
+			return updateObject(state, { connectionStatus: 'send failed' });
 		}
 		default:
 			return state;
