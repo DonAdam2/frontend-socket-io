@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './rootReducer';
 //middle wares
 import thunkMiddleware from 'redux-thunk';
-import socketMiddleware from './middlewares/SocketMiddleWare';
+import socketMiddleware from './middleWares/SocketMiddleWare';
 
 const middlewares = [];
 

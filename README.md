@@ -1,3 +1,26 @@
+## Chat app using socket.io-client package
+- Has a custom socket io middle ware
+- Has a custom socket io client which is passed to the socket io middle ware to make sure there is only one instance initiated throughout the app
+
+## Project idea:
+The main idea is to separate actions from the middleware, and even the socket client from the middleware. Hence, resulting in something like this:
+- Types -> REQUEST, SUCCESS, FAILURE types for every request (not mandatory).
+- Reducer -> to store different states
+- Actions -> send actions to connect / disconnect / emit / listen. (socket is a **parametrized function** in action promise, so that we can share the same socket instance throughout the whole application)
+- MiddleWare (src/js/store/middleWares/SocketMiddleWare.js) -> to treat your actions, and pass or not the current action to the socket client
+- Client (src/js/services/SocketClient.js) -> socket client which will be the only one that will ever load and manage the socket.io-client..
+
+### Information about the custom socket io middle ware:
+- It will be responsible for processing only socket requests.
+- It passes the action onto the socket client, and dispatches:
+
+  1. REQUEST (action types[0]): **on requesting** (action.type is sent to reducer).
+  1. SUCCESS (action types[1]): **on request success** (action.type and server response as action.result is sent to reducer).
+  1. FAILURE (action types[2]): **on request failure** (action.type and server response as action.error are sent to reducer).
+
+## Required backend repository to run this app:
+- Node-Js-Organization/chat-websocket
+
 ## This webpack (V4.44.1) boilerplate supports the following:
 
 - SCSS preprocessor
