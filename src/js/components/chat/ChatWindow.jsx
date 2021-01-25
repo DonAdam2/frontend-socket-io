@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTypingUsername, getMessages } from '../../store/chat/selectors/ChatSelectors';
 //components
 import Message from './Message';
-import { fetchMessages, fetchIsTyping } from '../../store/chat/actions/ChatActions';
+import { fetchMessages, fetchTypingUsername } from '../../store/chat/actions/ChatActions';
 import { getConnectionStatus } from '../../store/app/selectors/AppSelectors';
 
 const ChatWindow = () => {
@@ -15,7 +15,7 @@ const ChatWindow = () => {
 
 	useEffect(() => {
 		if (connectionStatus === 'connected') {
-			dispatch(fetchIsTyping());
+			dispatch(fetchTypingUsername());
 			dispatch(fetchMessages());
 		}
 	}, [connectionStatus]);

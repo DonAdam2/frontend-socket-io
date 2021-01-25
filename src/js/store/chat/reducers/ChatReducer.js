@@ -4,10 +4,10 @@ import { updateObject } from '../../../constants/Helpers';
 import { cloneDeep } from 'lodash';
 //action types
 import {
-	FETCH_IS_TYPING,
-	FETCH_IS_TYPING_FAILED,
-	FETCH_IS_TYPING_SUCCESS,
-	SEND_IS_TYPING,
+	FETCH_TYPING_USERNAME,
+	FETCH_TYPING_USERNAME_FAILED,
+	FETCH_TYPING_USERNAME_SUCCESS,
+	SEND_TYPING_USERNAME,
 	SEND_MESSAGE,
 	SEND_MESSAGE_FAIL,
 	SEND_MESSAGE_SUCCESS,
@@ -50,17 +50,17 @@ const reducer = (state = initialState, action) => {
 			messages.push(action.messages);
 			return updateObject(state, { messages, typingUsername: '' });
 		}
-		case SEND_IS_TYPING: {
+		case SEND_TYPING_USERNAME: {
 			return state;
 		}
-		case FETCH_IS_TYPING: {
+		case FETCH_TYPING_USERNAME: {
 			return state;
 		}
-		case FETCH_IS_TYPING_SUCCESS: {
+		case FETCH_TYPING_USERNAME_SUCCESS: {
 			console.log('GET_IS_TYPING_SUCCESS ', action.result);
 			return state;
 		}
-		case FETCH_IS_TYPING_FAILED: {
+		case FETCH_TYPING_USERNAME_FAILED: {
 			console.log('error', action.error);
 			return state;
 		}

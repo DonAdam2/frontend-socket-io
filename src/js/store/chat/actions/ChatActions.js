@@ -2,13 +2,13 @@
 import { store } from '../../../../index';
 //action types
 import {
-	FETCH_IS_TYPING,
-	FETCH_IS_TYPING_FAILED,
-	FETCH_IS_TYPING_SUCCESS,
+	FETCH_TYPING_USERNAME,
+	FETCH_TYPING_USERNAME_FAILED,
+	FETCH_TYPING_USERNAME_SUCCESS,
 	FETCH_MESSAGES,
 	FETCH_MESSAGES_FAIL,
 	FETCH_MESSAGES_SUCCESS,
-	SEND_IS_TYPING,
+	SEND_TYPING_USERNAME,
 	SEND_MESSAGE,
 	SEND_MESSAGE_FAIL,
 	SEND_MESSAGE_SUCCESS,
@@ -32,20 +32,20 @@ export const fetchMessages = () => ({
 		socket.on('chat', (messages) => store.dispatch(saveReceivedMessages({ messages }))),
 });
 
-export const sendIsTyping = ({ username }) => ({
+export const sendTypingUsername = ({ username }) => ({
 	type: 'socket',
-	types: [SEND_IS_TYPING],
+	types: [SEND_TYPING_USERNAME],
 	promise: (socket) => socket.emit('typing', username),
 });
 
-const saveTypingUsername = (username) => ({
+const saveReceivedTypingUsername = (username) => ({
 	type: SAVE_RECEIVED_TYPING_USERNAME,
 	username,
 });
 
-export const fetchIsTyping = () => ({
+export const fetchTypingUsername = () => ({
 	type: 'socket',
-	types: [FETCH_IS_TYPING, FETCH_IS_TYPING_SUCCESS, FETCH_IS_TYPING_FAILED],
+	types: [FETCH_TYPING_USERNAME, FETCH_TYPING_USERNAME_SUCCESS, FETCH_TYPING_USERNAME_FAILED],
 	promise: (socket) =>
-		socket.on('typing', (username) => store.dispatch(saveTypingUsername(username))),
+		socket.on('typing', (username) => store.dispatch(saveReceivedTypingUsername(username))),
 });

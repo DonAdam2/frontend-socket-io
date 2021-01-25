@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 //actions
-import { sendIsTyping, sendMessage } from '../../store/chat/actions/ChatActions';
+import { sendTypingUsername, sendMessage } from '../../store/chat/actions/ChatActions';
 
 const ChatInputs = () => {
 	const [message, setMessage] = useState(''),
@@ -17,7 +17,7 @@ const ChatInputs = () => {
 	};
 
 	const messageTypingHandler = () => {
-		dispatch(sendIsTyping({ username }));
+		dispatch(sendTypingUsername({ username }));
 	};
 
 	const submit = () => {
