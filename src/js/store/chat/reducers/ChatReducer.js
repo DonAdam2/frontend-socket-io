@@ -21,7 +21,7 @@ import {
 const initialState = {
 	messageStatus: '',
 	messages: [],
-	feedback: '',
+	typingUsername: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -48,7 +48,7 @@ const reducer = (state = initialState, action) => {
 		case SAVE_RECEIVED_MESSAGES: {
 			const messages = cloneDeep(state.messages);
 			messages.push(action.messages);
-			return updateObject(state, { messages, feedback: '' });
+			return updateObject(state, { messages, typingUsername: '' });
 		}
 		case SEND_IS_TYPING: {
 			return state;
@@ -65,7 +65,7 @@ const reducer = (state = initialState, action) => {
 			return state;
 		}
 		case SAVE_RECEIVED_TYPING_USERNAME: {
-			return updateObject(state, { feedback: action.feedback });
+			return updateObject(state, { typingUsername: action.username });
 		}
 		default:
 			return state;

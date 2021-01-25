@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //selectors
-import { getFeedback, getMessages } from '../../store/chat/selectors/ChatSelectors';
+import { getTypingUsername, getMessages } from '../../store/chat/selectors/ChatSelectors';
 //components
 import Message from './Message';
 import { fetchMessages, fetchIsTyping } from '../../store/chat/actions/ChatActions';
@@ -9,7 +9,7 @@ import { getConnectionStatus } from '../../store/app/selectors/AppSelectors';
 
 const ChatWindow = () => {
 	const messages = useSelector((state) => getMessages({ state })),
-		feedback = useSelector((state) => getFeedback({ state })),
+		typingUsername = useSelector((state) => getTypingUsername({ state })),
 		connectionStatus = useSelector((state) => getConnectionStatus({ state })),
 		dispatch = useDispatch();
 
@@ -29,9 +29,9 @@ const ChatWindow = () => {
 					))}
 				</div>
 			)}
-			{feedback && (
+			{typingUsername && (
 				<p className="feedback">
-					<em>{feedback} is typing a message ...!</em>
+					<em>{typingUsername} is typing a message ...!</em>
 				</p>
 			)}
 		</div>

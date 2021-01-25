@@ -40,7 +40,7 @@ export const sendIsTyping = ({ username }) => ({
 
 const saveTypingUsername = (username) => ({
 	type: SAVE_RECEIVED_TYPING_USERNAME,
-	feedback: username,
+	username,
 });
 
 export const fetchIsTyping = () => ({
