@@ -1,13 +1,23 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 //selectors
 import { getFeedback, getMessages } from '../../store/chat/selectors/ChatSelectors';
 //components
 import Message from './Message';
+import { getIsTyping } from '../../store/chat/actions/ChatActions';
+import { getConnectionStatus } from '../../store/app/selectors/AppSelectors';
 
 const ChatWindow = () => {
 	const messages = useSelector((state) => getMessages({ state })),
-		feedback = useSelector((state) => getFeedback({ state }));
+		feedback = useSelector((state) => getFeedback({ state })),
+		connectionStatus = useSelector((state) => getConnectionStatus({ state })),
+		dispatch = useDispatch();
+
+	useEffect(() => {
+		if (connectionStatus === 'connected') {
+			dispatch(getIsTyping());
+		}
+	}, [connectionStatus]);
 
 	return (
 		<div className="chat-window">
