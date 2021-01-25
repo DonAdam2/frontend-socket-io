@@ -19,7 +19,7 @@ import {
 } from '../chatActionTypes';
 
 const initialState = {
-	messageStatus: '',
+	messageStatus: '', //ideally it should come from the BE
 	messages: [],
 	typingUsername: '',
 };
@@ -27,14 +27,15 @@ const initialState = {
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SEND_MESSAGE: {
-			return updateObject(state, { messageStatus: 'Sending message' });
+			return updateObject(state, { messageStatus: 'Sending' });
 		}
 		case SEND_MESSAGE_SUCCESS: {
 			console.log(action.result);
-			return updateObject(state, { messageStatus: 'Sent message' });
+			return updateObject(state, { messageStatus: 'Sent' });
 		}
 		case SEND_MESSAGE_FAIL: {
-			return updateObject(state, { messageStatus: 'send failed' });
+			console.log(action.error);
+			return updateObject(state, { messageStatus: 'Failed' });
 		}
 		case FETCH_MESSAGES: {
 			return state;
