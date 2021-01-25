@@ -26,6 +26,15 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
+		case FETCH_MESSAGES:
+		case FETCH_MESSAGES_SUCCESS:
+		case FETCH_MESSAGES_FAIL:
+		case SEND_TYPING_USERNAME:
+		case FETCH_TYPING_USERNAME:
+		case FETCH_TYPING_USERNAME_FAILED:
+		case FETCH_TYPING_USERNAME_SUCCESS: {
+			return state;
+		}
 		case SEND_MESSAGE: {
 			return updateObject(state, { messageStatus: 'Sending' });
 		}
@@ -37,33 +46,10 @@ const reducer = (state = initialState, action) => {
 			console.log(action.error);
 			return updateObject(state, { messageStatus: 'Failed' });
 		}
-		case FETCH_MESSAGES: {
-			return state;
-		}
-		case FETCH_MESSAGES_SUCCESS: {
-			return state;
-		}
-		case FETCH_MESSAGES_FAIL: {
-			return state;
-		}
 		case SAVE_RECEIVED_MESSAGES: {
 			const messages = cloneDeep(state.messages);
 			messages.push(action.messages);
 			return updateObject(state, { messages, typingUsername: '' });
-		}
-		case SEND_TYPING_USERNAME: {
-			return state;
-		}
-		case FETCH_TYPING_USERNAME: {
-			return state;
-		}
-		case FETCH_TYPING_USERNAME_SUCCESS: {
-			console.log('GET_IS_TYPING_SUCCESS ', action.result);
-			return state;
-		}
-		case FETCH_TYPING_USERNAME_FAILED: {
-			console.log('error', action.error);
-			return state;
 		}
 		case SAVE_RECEIVED_TYPING_USERNAME: {
 			return updateObject(state, { typingUsername: action.username });
