@@ -7,8 +7,7 @@ import { startSocketConnection, stopSocketConnection } from './js/store/app/acti
 import { getConnectionStatus } from './js/store/app/selectors/AppSelectors';
 //components
 import LoadingIndicator from './js/components/UI/LoadingIndicator';
-import ChatBox from './js/containers/ChatBox';
-const TestComponent = lazy(() => import('./js/components/TestComponent'));
+const ChatBox = lazy(() => import('./js/containers/ChatBox'));
 
 const App = () => {
 	const dispatch = useDispatch(),
@@ -32,7 +31,6 @@ const App = () => {
 				</div>
 			}
 		>
-			<TestComponent />
 			<ChatBox />
 		</Suspense>
 	);

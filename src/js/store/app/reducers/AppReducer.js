@@ -12,14 +12,11 @@ import {
 import { updateObject } from '../../../constants/Helpers';
 
 const initialState = {
-	testString: 'Initial test',
 	connectionStatus: '',
 };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case TEST_ACTION:
-			return updateObject(state, { testString: 'Final test' });
 		case START_SOCKET_CONNECTION: {
 			return updateObject(state, { connectionStatus: 'connecting' });
 		}

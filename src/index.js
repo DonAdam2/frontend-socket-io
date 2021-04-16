@@ -18,7 +18,7 @@ import './scss/styles.scss';
 import SocketClient from './js/services/SocketClient';
 
 const socketClient = new SocketClient();
-export const store = configureStore(socketClient);
+const store = configureStore(socketClient);
 
 ReactDOM.render(
 	<Provider store={store}>

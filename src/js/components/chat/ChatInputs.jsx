@@ -16,13 +16,20 @@ const ChatInputs = () => {
 		setUsername(value);
 	};
 
-	const messageTypingHandler = () => {
-		dispatch(sendTypingUsername({ username }));
-	};
-
 	const submit = () => {
 		dispatch(sendMessage({ message, username }));
 		setMessage('');
+	};
+
+	const onKeyDownHandler = (e) => {
+		if (e.isComposing || e.keyCode === 229) {
+			return;
+		}
+		if (e.key === 'Enter') {
+			submit();
+		} else {
+			dispatch(sendTypingUsername({ username }));
+		}
 	};
 
 	return (
@@ -37,7 +44,7 @@ const ChatInputs = () => {
 				type="text"
 				value={message}
 				onChange={messageHandler}
-				onKeyPress={messageTypingHandler}
+				onKeyDown={onKeyDownHandler}
 				placeholder="Enter your message..."
 			/>
 			<button onClick={submit} disabled={!username || !message}>

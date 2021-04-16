@@ -21,7 +21,7 @@ export const socketMiddleware = (socket) => {
 		const [REQUEST, SUCCESS, FAILURE] = types;
 		next({ ...rest, type: REQUEST });
 
-		return promise(socket)
+		return promise({ socket, dispatch, getState })
 			.then((result) => {
 				return next({ ...rest, result, type: SUCCESS });
 			})

@@ -1,5 +1,3 @@
-//store
-import { store } from '../../../../index';
 //action types
 import {
 	FETCH_TYPING_USERNAME,
@@ -20,7 +18,7 @@ export const sendMessage = ({ message, username }) => ({
 	type: 'socket',
 	//types: [SEND_MESSAGE, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_FAIL], //removing success and fail because the current backend doesn't support it
 	types: [SEND_MESSAGE],
-	promise: (socket) => socket.emit('chat', { message, handle: username }),
+	promise: ({ socket }) => socket.emit('chat', { message, handle: username }),
 });
 
 const saveReceivedMessages = ({ messages }) => ({ type: SAVE_RECEIVED_MESSAGES, messages });
@@ -28,14 +26,14 @@ const saveReceivedMessages = ({ messages }) => ({ type: SAVE_RECEIVED_MESSAGES, 
 export const fetchMessages = () => ({
 	type: 'socket',
 	types: [FETCH_MESSAGES, FETCH_MESSAGES_SUCCESS, FETCH_MESSAGES_FAIL],
-	promise: (socket) =>
-		socket.on('chat', (messages) => store.dispatch(saveReceivedMessages({ messages }))),
+	promise: ({ socket, dispatch }) =>
+		socket.on('chat', (messages) => dispatch(saveReceivedMessages({ messages }))),
 });
 
 export const sendTypingUsername = ({ username }) => ({
 	type: 'socket',
 	types: [SEND_TYPING_USERNAME],
-	promise: (socket) => socket.emit('typing', username),
+	promise: ({ socket }) => socket.emit('typing', username),
 });
 
 const saveReceivedTypingUsername = (username) => ({
@@ -46,6 +44,6 @@ const saveReceivedTypingUsername = (username) => ({
 export const fetchTypingUsername = () => ({
 	type: 'socket',
 	types: [FETCH_TYPING_USERNAME, FETCH_TYPING_USERNAME_SUCCESS, FETCH_TYPING_USERNAME_FAILED],
-	promise: (socket) =>
-		socket.on('typing', (username) => store.dispatch(saveReceivedTypingUsername(username))),
+	promise: ({ socket, dispatch }) =>
+		socket.on('typing', (username) => dispatch(saveReceivedTypingUsername(username))),
 });
