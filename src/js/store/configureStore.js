@@ -10,24 +10,24 @@ const middlewares = [];
 
 // log redux data in development mode only
 if (process.env.NODE_ENV !== 'production') {
-	const { logger } = require('redux-logger');
-	middlewares.push(logger);
+  const { logger } = require('redux-logger');
+  middlewares.push(logger);
 }
 
 const configureStore = (socketClient) => {
-	const store = createStore(
-		rootReducer,
-		/* preloadedState, */
-		composeWithDevTools(
-			applyMiddleware(thunkMiddleware, socketMiddleware(socketClient), ...middlewares)
-		)
-	);
+  const store = createStore(
+    rootReducer,
+    /* preloadedState, */
+    composeWithDevTools(
+      applyMiddleware(thunkMiddleware, socketMiddleware(socketClient), ...middlewares)
+    )
+  );
 
-	// enable hot loading in development mode only
-	if (process.env.NODE_ENV !== 'production' && module.hot) {
-		module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer));
-	}
+  // enable hot loading in development mode only
+  if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./rootReducer', () => store.replaceReducer(rootReducer));
+  }
 
-	return store;
+  return store;
 };
 export default configureStore;

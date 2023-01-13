@@ -9,22 +9,22 @@ import ChatWindow from '../components/chat/ChatWindow';
 import ChatInputs from '../components/chat/ChatInputs';
 
 const ChatBox = () => {
-	const connectionStatus = useSelector((state) => getConnectionStatus({ state })),
-		dispatch = useDispatch();
+  const connectionStatus = useSelector((state) => getConnectionStatus({ state })),
+    dispatch = useDispatch();
 
-	useEffect(() => {
-		if (connectionStatus === 'connected') {
-			dispatch(fetchTypingUsername());
-			dispatch(fetchMessages());
-		}
-	}, [connectionStatus]);
+  useEffect(() => {
+    if (connectionStatus === 'connected') {
+      dispatch(fetchTypingUsername());
+      dispatch(fetchMessages());
+    }
+  }, [connectionStatus, dispatch]);
 
-	return (
-		<div className="chat-wrapper">
-			<ChatWindow />
-			<ChatInputs />
-		</div>
-	);
+  return (
+    <div className="chat-wrapper">
+      <ChatWindow />
+      <ChatInputs />
+    </div>
+  );
 };
 
 export default ChatBox;
