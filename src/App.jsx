@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //actions
-import { connectToSocket, disconnectFromSocket } from '@/js/store/app/reducers/AppReducer';
+import { connectToSocket, disconnectFromSocket } from '@/js/store/app/slices/AppSlice';
 //selectors
 import { getConnectionStatus } from './js/store/app/selectors/AppSelectors';
 //components

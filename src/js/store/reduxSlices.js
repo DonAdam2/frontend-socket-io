@@ -1,5 +1,5 @@
-import app from './app/reducers/AppReducer';
-import chat from './chat/reducers/ChatReducer';
+import app from './app/slices/AppSlice';
+import chat from './chat/slices/ChatSlice';
 
 export const reduxSlices = {
   app,

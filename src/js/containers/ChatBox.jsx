@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //selectors
 import { getConnectionStatus } from '../store/app/selectors/AppSelectors';
 //actions
-import { fetchMessages, fetchTypingUsername } from '@/js/store/chat/reducers/ChatReducer';
+import { fetchMessages, fetchTypingUsername } from '@/js/store/chat/slices/ChatSlice';
 //components
 import ChatWindow from '../components/chat/ChatWindow';
 import ChatInputs from '../components/chat/ChatInputs';
