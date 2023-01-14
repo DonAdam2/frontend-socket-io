@@ -24,7 +24,7 @@
 
 ### Development (locally):
 
-- Clone repo => `git clone https://github.com/react-custom-projects/chat-socket-io`
+- Clone repo => `git clone git@github.com:react-custom-projects/chat-socket-io.git`
 - Navigate to project directory `cd chat-socket-io`
 - Install dependencies => `yarn install`
 - Start the development server => `yarn start`
