@@ -22,7 +22,7 @@
 
 ## Installing / Getting Started:
 
-### Development (locally):
+### Development:
 
 - Clone repo => `git clone git@github.com:react-custom-projects/chat-socket-io.git`
 - Navigate to project directory `cd chat-socket-io`
