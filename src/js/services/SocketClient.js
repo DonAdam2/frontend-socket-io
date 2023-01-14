@@ -4,7 +4,7 @@ class SocketClient {
   socket;
 
   connect() {
-    this.socket = io.connect(process.env.SOCKET_HOST, { transports: ['websocket'] });
+    this.socket = io(process.env.SOCKET_HOST);
     return new Promise((resolve, reject) => {
       this.socket.on('connect', () => resolve());
       this.socket.on('connect_error', (error) => reject(error));
