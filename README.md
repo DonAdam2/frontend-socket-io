@@ -1,6 +1,6 @@
 ## overview:
 
-- This app is the frontend of [this repository](https://github.com/Node-Js-Organization/chat-web-socket)
+- This app is the frontend of [this repository](https://github.com/DonAdam2/backend-socket-io)
 - Simple react app which shows how to integrate **socket.io-client** with **@reduxjs/toolkit**
 
 ## This app has the following:
@@ -24,8 +24,8 @@
 
 ### Development:
 
-- Clone repo => `git clone git@github.com:react-custom-projects/chat-socket-io.git`
-- Navigate to project directory `cd chat-socket-io`
+- Clone repo => `git clone git@github.com:DonAdam2/frontend-socket-io.git`
+- Navigate to project directory `cd frontend-socket-io`
 - Install dependencies => `yarn install`
 - Start the development server => `yarn start`
 
