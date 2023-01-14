@@ -1,6 +1,6 @@
 const Message = ({ username, content }) => (
   <p className="message">
-    {username}: {content}
+    <span className="username">{username}</span>: {content}
   </p>
 );
 
