@@ -1,7 +1,6 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 //selectors
-import { getTypingUsername, getMessages } from '../../store/chat/selectors/ChatSelectors';
+import { getTypingUsername, getMessages } from '@/js/store/chat/selectors/ChatSelectors';
 //components
 import Message from './Message';
 

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //selectors
 import { getConnectionStatus } from '../store/app/selectors/AppSelectors';
 //actions
-import { fetchMessages, fetchTypingUsername } from '../store/chat/actions/ChatActions';
+import { fetchMessages, fetchTypingUsername } from '@/js/store/chat/reducers/ChatReducer';
 //components
 import ChatWindow from '../components/chat/ChatWindow';
 import ChatInputs from '../components/chat/ChatInputs';

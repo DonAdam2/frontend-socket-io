@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 //actions
-import { sendTypingUsername, sendMessage } from '../../store/chat/actions/ChatActions';
+import { sendMessage, sendTypingUsername } from '@/js/store/chat/reducers/ChatReducer';
+//actions
 
 const ChatInputs = () => {
   const [message, setMessage] = useState(''),

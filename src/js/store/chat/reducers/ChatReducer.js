@@ -1,22 +1,6 @@
-//constants
-import { updateObject } from '../../../constants/Helpers';
-//lodash
-import { cloneDeep } from 'lodash';
-//action types
-import {
-  FETCH_TYPING_USERNAME,
-  FETCH_TYPING_USERNAME_FAILED,
-  FETCH_TYPING_USERNAME_SUCCESS,
-  SEND_TYPING_USERNAME,
-  SEND_MESSAGE,
-  SEND_MESSAGE_FAIL,
-  SEND_MESSAGE_SUCCESS,
-  SAVE_RECEIVED_TYPING_USERNAME,
-  SAVE_RECEIVED_MESSAGES,
-  FETCH_MESSAGES,
-  FETCH_MESSAGES_SUCCESS,
-  FETCH_MESSAGES_FAIL,
-} from '../chatActionTypes';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+//socket client
+import { socketClient } from '../../../../index';
 
 const initialState = {
   messageStatus: '', //ideally it should come from the BE
@@ -24,7 +8,90 @@ const initialState = {
   typingUsername: '',
 };
 
-const reducer = (state = initialState, action) => {
+export const sendMessage = createAsyncThunk('sendMessage', async function ({ message, username }) {
+  return await socketClient.emit('chat', { message, handle: username });
+});
+
+export const fetchMessages = createAsyncThunk(
+  'fetchMessages',
+  async function (_, { getState, dispatch }) {
+    console.log('state ', getState());
+    return await socketClient.on('chat', (receivedMessages) =>
+      dispatch({ type: 'chat/saveReceivedMessages', payload: { messages: receivedMessages } })
+    );
+  }
+);
+
+export const sendTypingUsername = createAsyncThunk(
+  'sendTypingUsername',
+  async function ({ username }) {
+    return await socketClient.emit('typing', username);
+  }
+);
+
+export const fetchTypingUsername = createAsyncThunk(
+  'fetchTypingUsername',
+  async function (_, { dispatch }) {
+    return await socketClient.on('typing', (username) =>
+      dispatch({ type: 'chat/saveReceivedTypingUsername', payload: { username: username } })
+    );
+  }
+);
+
+const chatSlice = createSlice({
+  name: 'chat',
+  initialState,
+  reducers: {
+    saveReceivedMessages: (state, action) => {
+      state.messages.push(action.payload.messages);
+      state.typingUsername = '';
+    },
+    saveReceivedTypingUsername: (state, action) => {
+      state.typingUsername = action.payload.username;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(sendMessage.pending, (state) => {
+      state.messageStatus = 'Sending';
+    });
+    builder.addCase(sendMessage.fulfilled, (state) => {
+      state.messageStatus = 'Sent successfully';
+    });
+    builder.addCase(sendMessage.rejected, (state) => {
+      state.messageStatus = 'Send failed';
+    });
+    builder.addCase(fetchMessages.pending, () => {
+      // state.connectionStatus = 'disconnecting';
+    });
+    builder.addCase(fetchMessages.fulfilled, () => {
+      // state.connectionStatus = 'disconnected';
+    });
+    builder.addCase(fetchMessages.rejected, () => {
+      // state.connectionStatus = 'disconnection failed';
+    });
+    builder.addCase(sendTypingUsername.pending, () => {
+      // state.connectionStatus = 'disconnecting';
+    });
+    builder.addCase(sendTypingUsername.fulfilled, () => {
+      // state.connectionStatus = 'disconnected';
+    });
+    builder.addCase(sendTypingUsername.rejected, () => {
+      // state.connectionStatus = 'disconnection failed';
+    });
+    builder.addCase(fetchTypingUsername.pending, () => {
+      // state.connectionStatus = 'disconnecting';
+    });
+    builder.addCase(fetchTypingUsername.fulfilled, () => {
+      // state.connectionStatus = 'disconnected';
+    });
+    builder.addCase(fetchTypingUsername.rejected, () => {
+      // state.connectionStatus = 'disconnection failed';
+    });
+  },
+});
+export default chatSlice.reducer;
+
+/*const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_MESSAGES:
     case FETCH_MESSAGES_SUCCESS:
@@ -59,4 +126,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default reducer;*/

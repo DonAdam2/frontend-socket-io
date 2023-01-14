@@ -1,17 +1,17 @@
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 //import meta image
 import '@/public/assets/images/metaImage.jpg';
-import { Provider } from 'react-redux';
-
-import configureStore from './js/store/configureStore';
-import App from './App';
+//styles
 import '@/scss/global.scss';
-
+//store
+import store from '@/js/store/store';
+//app
+import App from './App';
 //socket client
 import SocketClient from './js/services/SocketClient';
 
-const socketClient = new SocketClient();
-const store = configureStore(socketClient);
+export const socketClient = new SocketClient();
 
 const container = document.getElementById('root'),
   root = createRoot(container);

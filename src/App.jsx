@@ -1,7 +1,7 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //actions
-import { startSocketConnection, stopSocketConnection } from './js/store/app/actions/AppActions';
+import { connectToSocket, disconnectFromSocket } from '@/js/store/app/reducers/AppReducer';
 //selectors
 import { getConnectionStatus } from './js/store/app/selectors/AppSelectors';
 //components
@@ -13,11 +13,11 @@ const App = () => {
     connectionStatus = useSelector((state) => getConnectionStatus({ state }));
 
   useEffect(() => {
-    dispatch(startSocketConnection());
+    dispatch(connectToSocket());
 
     return () => {
       if (connectionStatus === 'connected') {
-        dispatch(stopSocketConnection());
+        dispatch(disconnectFromSocket());
       }
     };
     //eslint-disable-next-line
