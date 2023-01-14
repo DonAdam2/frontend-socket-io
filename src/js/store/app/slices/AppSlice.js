@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 //socket client
 import { socketInstance } from '../../../../index';
+//constants
+import { appSocketMessages } from '@/js/constants/Constants';
 
 const initialState = {
   connectionStatus: '',
@@ -20,22 +22,22 @@ const appSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(connectToSocket.pending, (state) => {
-      state.connectionStatus = 'connecting';
+      state.connectionStatus = appSocketMessages.connectionStatus.pending;
     });
     builder.addCase(connectToSocket.fulfilled, (state) => {
-      state.connectionStatus = 'connected';
+      state.connectionStatus = appSocketMessages.connectionStatus.fulfilled;
     });
     builder.addCase(connectToSocket.rejected, (state) => {
-      state.connectionStatus = 'connection failed';
+      state.connectionStatus = appSocketMessages.connectionStatus.rejected;
     });
     builder.addCase(disconnectFromSocket.pending, (state) => {
-      state.connectionStatus = 'disconnecting';
+      state.connectionStatus = appSocketMessages.disconnectionStatus.pending;
     });
     builder.addCase(disconnectFromSocket.fulfilled, (state) => {
-      state.connectionStatus = 'disconnected';
+      state.connectionStatus = appSocketMessages.disconnectionStatus.fulfilled;
     });
     builder.addCase(disconnectFromSocket.rejected, (state) => {
-      state.connectionStatus = 'disconnection failed';
+      state.connectionStatus = appSocketMessages.disconnectionStatus.rejected;
     });
   },
 });
