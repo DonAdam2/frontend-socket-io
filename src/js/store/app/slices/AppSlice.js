@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 //socket client
-import { socketClient } from '../../../../index';
+import { socketInstance } from '../../../../index';
 
 const initialState = {
   connectionStatus: '',
 };
 
 export const connectToSocket = createAsyncThunk('connectToSocket', async function () {
-  return await socketClient.connect();
+  return await socketInstance.connect();
 });
 
 export const disconnectFromSocket = createAsyncThunk('disconnectFromSocket', async function () {
-  return await socketClient.disconnect();
+  return await socketInstance.disconnect();
 });
 
 const appSlice = createSlice({

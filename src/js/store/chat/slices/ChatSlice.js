@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 //socket client
-import { socketClient } from '../../../../index';
+import { socketInstance } from '../../../../index';
 
 const initialState = {
   messageStatus: '', //ideally it should come from the BE
@@ -9,14 +9,14 @@ const initialState = {
 };
 
 export const sendMessage = createAsyncThunk('sendMessage', async function ({ message, username }) {
-  return await socketClient.emit('chat', { message, handle: username });
+  return await socketInstance.emit('chat', { message, handle: username });
 });
 
 export const fetchMessages = createAsyncThunk(
   'fetchMessages',
   async function (_, { getState, dispatch }) {
     console.log('state ', getState());
-    return await socketClient.on('chat', (receivedMessages) =>
+    return await socketInstance.on('chat', (receivedMessages) =>
       dispatch({ type: 'chat/saveReceivedMessages', payload: { messages: receivedMessages } })
     );
   }
@@ -25,14 +25,14 @@ export const fetchMessages = createAsyncThunk(
 export const sendTypingUsername = createAsyncThunk(
   'sendTypingUsername',
   async function ({ username }) {
-    return await socketClient.emit('typing', username);
+    return await socketInstance.emit('typing', username);
   }
 );
 
 export const fetchTypingUsername = createAsyncThunk(
   'fetchTypingUsername',
   async function (_, { dispatch }) {
-    return await socketClient.on('typing', (username) =>
+    return await socketInstance.on('typing', (username) =>
       dispatch({ type: 'chat/saveReceivedTypingUsername', payload: { username: username } })
     );
   }

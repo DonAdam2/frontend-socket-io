@@ -11,7 +11,7 @@ import App from './App';
 //socket client
 import SocketClient from './js/services/SocketClient';
 
-export const socketClient = new SocketClient();
+export const socketInstance = new SocketClient();
 
 const container = document.getElementById('root'),
   root = createRoot(container);
