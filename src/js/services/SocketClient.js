@@ -1,6 +1,16 @@
 import { io } from 'socket.io-client';
 
+let instance = null;
+
 class SocketClient {
+  constructor() {
+    if (!instance) {
+      instance = this;
+    }
+
+    return instance;
+  }
+
   socket;
 
   connect() {

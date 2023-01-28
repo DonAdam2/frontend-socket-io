@@ -5,8 +5,9 @@
 
 ## This app has the following:
 
-- Socket client which has all socket functions (connect, disconnect, emit and on)
-- Create a single instance of socket client in **index.jsx** file and use it throughout the app
+- Singleton socket client which has all socket functions (connect, disconnect, emit and on)
+  - **Note:** Using singleton pattern to make sure that we have a single instance throughout the app 
+- Create an instance of socket client in **index.jsx** file and use it throughout the app
 - Use **createAsyncThunk** from **@reduxjs/toolkit** because it creates the following 3 types automatically (pending, fulfilled, rejected)
 
 ## Created using:
