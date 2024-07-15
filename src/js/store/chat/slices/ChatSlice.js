@@ -1,43 +1,19 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-//socket client
-import { socketInstance } from '../../../../index';
-import { appSocketMessages, backendSocketEvents } from '@/js/constants/Constants';
+import { createSlice } from '@reduxjs/toolkit';
+//constants
+import { appSocketMessages } from '@/js/constants/Constants';
+//async actions
+import {
+  fetchMessages,
+  fetchTypingUsername,
+  sendMessage,
+  sendTypingUsername,
+} from '@/js/store/chat/asyncActions/ChatAsyncActions';
 
 const initialState = {
   messageStatus: '', //ideally it should come from the BE
   messages: [],
   typingUsername: '',
 };
-
-export const sendMessage = createAsyncThunk('sendMessage', async function ({ message, username }) {
-  return await socketInstance.emit(backendSocketEvents.emit.chat, { message, handle: username });
-});
-
-export const fetchMessages = createAsyncThunk(
-  'fetchMessages',
-  async function (_, { getState, dispatch }) {
-    console.log('state ', getState());
-    return await socketInstance.on(backendSocketEvents.on.chat, (receivedMessages) =>
-      dispatch({ type: 'chat/saveReceivedMessages', payload: { messages: receivedMessages } })
-    );
-  }
-);
-
-export const sendTypingUsername = createAsyncThunk(
-  'sendTypingUsername',
-  async function ({ username }) {
-    return await socketInstance.emit(backendSocketEvents.emit.typing, username);
-  }
-);
-
-export const fetchTypingUsername = createAsyncThunk(
-  'fetchTypingUsername',
-  async function (_, { dispatch }) {
-    return await socketInstance.on(backendSocketEvents.on.typing, (username) =>
-      dispatch({ type: 'chat/saveReceivedTypingUsername', payload: { username: username } })
-    );
-  }
-);
 
 const chatSlice = createSlice({
   name: 'chat',
@@ -52,42 +28,52 @@ const chatSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(sendMessage.pending, (state) => {
-      state.messageStatus = appSocketMessages.messageStatus.pending;
-    });
-    builder.addCase(sendMessage.fulfilled, (state) => {
-      state.messageStatus = appSocketMessages.messageStatus.fulfilled;
-    });
-    builder.addCase(sendMessage.rejected, (state) => {
-      state.messageStatus = appSocketMessages.messageStatus.rejected;
-    });
-    builder.addCase(fetchMessages.pending, () => {
-      // add the required logic
-    });
-    builder.addCase(fetchMessages.fulfilled, () => {
-      // add the required logic
-    });
-    builder.addCase(fetchMessages.rejected, () => {
-      // add the required logic
-    });
-    builder.addCase(sendTypingUsername.pending, () => {
-      // add the required logic
-    });
-    builder.addCase(sendTypingUsername.fulfilled, () => {
-      // add the required logic
-    });
-    builder.addCase(sendTypingUsername.rejected, () => {
-      // add the required logic
-    });
-    builder.addCase(fetchTypingUsername.pending, () => {
-      // state.connectionStatus = 'disconnecting';
-    });
-    builder.addCase(fetchTypingUsername.fulfilled, () => {
-      // add the required logic
-    });
-    builder.addCase(fetchTypingUsername.rejected, () => {
-      // add the required logic
-    });
+    //sendMessage
+    builder
+      .addCase(sendMessage.pending, (state) => {
+        state.messageStatus = appSocketMessages.messageStatus.pending;
+      })
+      .addCase(sendMessage.fulfilled, (state) => {
+        state.messageStatus = appSocketMessages.messageStatus.fulfilled;
+      })
+      .addCase(sendMessage.rejected, (state) => {
+        state.messageStatus = appSocketMessages.messageStatus.rejected;
+      });
+    //fetchMessages
+    builder
+      .addCase(fetchMessages.pending, () => {
+        // add the required logic
+      })
+      .addCase(fetchMessages.fulfilled, () => {
+        // add the required logic
+      })
+      .addCase(fetchMessages.rejected, () => {
+        // add the required logic
+      });
+    //sendTypingUsername
+    builder
+      .addCase(sendTypingUsername.pending, () => {
+        // add the required logic
+      })
+      .addCase(sendTypingUsername.fulfilled, () => {
+        // add the required logic
+      })
+      .addCase(sendTypingUsername.rejected, () => {
+        // add the required logic
+      });
+    //fetchTypingUsername
+    builder
+      .addCase(fetchTypingUsername.pending, () => {
+        // state.connectionStatus = 'disconnecting';
+      })
+      .addCase(fetchTypingUsername.fulfilled, () => {
+        // add the required logic
+      })
+      .addCase(fetchTypingUsername.rejected, () => {
+        // add the required logic
+      });
   },
 });
+
+export const { saveReceivedMessages, saveReceivedTypingUsername } = chatSlice.actions;
 export default chatSlice.reducer;

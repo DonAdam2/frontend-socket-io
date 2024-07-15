@@ -1,11 +1,12 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //actions
-import { connectToSocket, disconnectFromSocket } from '@/js/store/app/slices/AppSlice';
+import { connectToSocket, disconnectFromSocket } from '@/js/store/app/asyncActions/AppAsyncActions';
 //selectors
 import { getConnectionStatus } from './js/store/app/selectors/AppSelectors';
 //components
 import LoadingIndicator from './js/components/UI/LoadingIndicator';
+
 const ChatBox = lazy(() => import('./js/containers/ChatBox'));
 
 const App = () => {
