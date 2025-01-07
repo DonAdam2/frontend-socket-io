@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as vars;
 
 .container {
   margin-right: auto;
@@ -7,19 +7,19 @@
   padding-right: 8px;
 }
 // > 768
-@media (min-width: $tablet) {
+@media (min-width: vars.$tablet) {
   .container {
     width: 750px;
   }
 }
 // > 992
-@media (min-width: $laptop) {
+@media (min-width: vars.$laptop) {
   .container {
     width: 970px;
   }
 }
 // > 1200
-@media (min-width: $desktop) {
+@media (min-width: vars.$desktop) {
   .container {
     width: 1170px;
   }
@@ -217,7 +217,7 @@
 }
 
 // > 512
-@media (min-width: $mobile-large) {
+@media (min-width: vars.$mobile-large) {
   .col-xs-12 {
     width: 100%;
   }
@@ -336,7 +336,7 @@
   }
 }
 // > 768
-@media (min-width: $tablet) {
+@media (min-width: vars.$tablet) {
   .col-sm-12 {
     width: 100%;
   }
@@ -452,7 +452,7 @@
 }
 
 // > 992
-@media (min-width: $laptop) {
+@media (min-width: vars.$laptop) {
   .col-md-12 {
     width: 100%;
   }
@@ -568,7 +568,7 @@
 }
 
 // > 1200
-@media (min-width: $desktop) {
+@media (min-width: vars.$desktop) {
   .col-lg-12 {
     width: 100%;
   }
