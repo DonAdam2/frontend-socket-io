@@ -3,18 +3,30 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { socketInstance } from '../../../../index';
 //constants
 import { backendSocketEvents } from '@/js/constants/Constants';
+import { getCurrentUsername } from '@/js/store/chat/selectors/ChatSelectors';
 
-export const sendMessage = createAsyncThunk('sendMessage', async function ({ message, username }) {
-  return await socketInstance.emit(backendSocketEvents.emit.chat, { message, handle: username });
-});
+export const sendMessage = createAsyncThunk(
+  'sendMessage',
+  async function ({ message, username }, { dispatch }) {
+    dispatch({
+      type: 'chat/saveReceivedMessages',
+      payload: { messages: { message, handle: username }, isMine: true },
+    });
+    socketInstance.emit(backendSocketEvents.emit.chat, { message, handle: username });
+  }
+);
 
 export const fetchMessages = createAsyncThunk(
   'fetchMessages',
   async function (_, { getState, dispatch }) {
+    const state = getState();
     console.log('state ', getState());
-    return await socketInstance.on(backendSocketEvents.on.chat, (receivedMessages) =>
-      dispatch({ type: 'chat/saveReceivedMessages', payload: { messages: receivedMessages } })
-    );
+    return socketInstance.on(backendSocketEvents.on.chat, (receivedMessages) => {
+      const currentUsername = getCurrentUsername({ state });
+      //skip the sender's own echo since it was already added locally
+      if (receivedMessages.handle === currentUsername) return;
+      dispatch({ type: 'chat/saveReceivedMessages', payload: { messages: receivedMessages } });
+    });
   }
 );
 

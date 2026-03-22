@@ -13,6 +13,7 @@ const initialState = {
   messageStatus: '', //ideally it should come from the BE
   messages: [],
   typingUsername: '',
+  currentUsername: '',
 };
 
 const chatSlice = createSlice({
@@ -20,11 +21,18 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     saveReceivedMessages: (state, action) => {
-      state.messages.push(action.payload.messages);
+      const msg = action.payload.messages;
+      state.messages.push({
+        ...msg,
+        isMine: !!action.payload.isMine,
+      });
       state.typingUsername = '';
     },
     saveReceivedTypingUsername: (state, action) => {
       state.typingUsername = action.payload.username;
+    },
+    setCurrentUsername: (state, action) => {
+      state.currentUsername = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -75,5 +83,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { saveReceivedMessages, saveReceivedTypingUsername } = chatSlice.actions;
+export const { saveReceivedMessages, saveReceivedTypingUsername, setCurrentUsername } =
+  chatSlice.actions;
 export default chatSlice.reducer;

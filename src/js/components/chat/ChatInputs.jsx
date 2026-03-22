@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 //actions
 import { sendMessage, sendTypingUsername } from '@/js/store/chat/asyncActions/ChatAsyncActions';
+import { setCurrentUsername } from '@/js/store/chat/slices/ChatSlice';
 
 const ChatInputs = () => {
   const [message, setMessage] = useState(''),
@@ -14,6 +15,7 @@ const ChatInputs = () => {
 
   const usernameHandler = ({ target: { value } }) => {
     setUsername(value);
+    dispatch(setCurrentUsername(value));
   };
 
   const submit = () => {

@@ -13,7 +13,7 @@ const ChatWindow = () => {
       {messages.length > 0 && (
         <div className="output">
           {messages.map((el, i) => (
-            <Message key={i} username={el.handle} content={el.message} />
+            <Message key={i} username={el.handle} content={el.message} isMine={!!el.isMine} />
           ))}
         </div>
       )}

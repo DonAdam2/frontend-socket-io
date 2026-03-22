@@ -1,5 +1,5 @@
-const Message = ({ username, content }) => (
-  <p className="message">
+const Message = ({ username, content, isMine }) => (
+  <p className={`message${isMine ? ' message--mine' : ''}`}>
     <span className="username">{username}</span>: {content}
   </p>
 );

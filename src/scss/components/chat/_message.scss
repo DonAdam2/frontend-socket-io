@@ -8,4 +8,12 @@
     font-weight: bold;
     color: #575ed8;
   }
+
+  &--mine {
+    text-align: right;
+
+    .username {
+      color: #2e7d32;
+    }
+  }
 }
