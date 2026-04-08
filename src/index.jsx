@@ -8,10 +8,6 @@ import '@/scss/global.scss';
 import store from '@/js/store/store';
 //app
 import App from './App';
-//socket client
-import SocketClient from './js/services/SocketClient';
-
-export const socketInstance = new SocketClient();
 
 const container = document.getElementById('root'),
   root = createRoot(container);

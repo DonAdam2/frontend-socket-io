@@ -1,11 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-//socket client
-import { socketInstance } from '../../../../index';
+import { chatSocket } from '@/js/services/sockets';
 
-export const connectToSocket = createAsyncThunk('connectToSocket', async function () {
-  return await socketInstance.connect();
+export const connectToSocket = createAsyncThunk('connectToSocket', function () {
+  return chatSocket.connect();
 });
 
-export const disconnectFromSocket = createAsyncThunk('disconnectFromSocket', async function () {
-  return await socketInstance.disconnect();
+export const disconnectFromSocket = createAsyncThunk('disconnectFromSocket', function () {
+  return chatSocket.disconnect();
 });

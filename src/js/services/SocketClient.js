@@ -1,20 +1,25 @@
 import { io } from 'socket.io-client';
 
-let instance = null;
-
+/**
+ * Low-level promise-based wrapper around a single socket.io-client connection.
+ * Each instance manages its own socket — no shared singletons.
+ *
+ * Not meant to be used directly by feature code. Use {@link createSocketService}
+ * from `createSocketService.js` to get a pre-configured service instead.
+ *
+ * @example
+ *   const client = new SocketClient();
+ *   await client.connect('http://localhost:4000', { transports: ['websocket'] });
+ *   await client.emit('chat', { message: 'hello' });
+ *   await client.on('chat', (msg) => console.log(msg));
+ *   client.off('chat');
+ *   await client.disconnect();
+ */
 class SocketClient {
-  constructor() {
-    if (!instance) {
-      instance = this;
-    }
+  socket = null;
 
-    return instance;
-  }
-
-  socket;
-
-  connect() {
-    this.socket = io(process.env.SOCKET_HOST);
+  connect(url, options = {}) {
+    this.socket = io(url, options);
     return new Promise((resolve, reject) => {
       this.socket.on('connect', () => resolve());
       this.socket.on('connect_error', (error) => reject(error));
@@ -23,6 +28,7 @@ class SocketClient {
 
   disconnect() {
     return new Promise((resolve) => {
+      if (!this.socket) return resolve();
       this.socket.disconnect(() => {
         this.socket = null;
         resolve();
@@ -35,7 +41,6 @@ class SocketClient {
       if (!this.socket) return reject('No socket connection.');
 
       return this.socket.emit(event, data, (response) => {
-        // Response is the optional callback that you can use with socket.io in every request. See 1 above.
         if (response.error) {
           console.error(response.error);
           return reject(response.error);
@@ -47,13 +52,21 @@ class SocketClient {
   }
 
   on(event, fun) {
-    // No promise is needed here, but we're expecting one in the middleware.
     return new Promise((resolve, reject) => {
       if (!this.socket) return reject('No socket connection.');
 
       this.socket.on(event, fun);
       resolve();
     });
+  }
+
+  off(event, fun) {
+    if (!this.socket) return;
+    this.socket.off(event, fun);
+  }
+
+  get connected() {
+    return this.socket?.connected ?? false;
   }
 }
 
